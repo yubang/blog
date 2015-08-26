@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block "head" %}
+    <title>yubang的博客</title>
+{% endblock %}
+
+{% block "content" %}
+    <div class="search-blog-div">
+        <select>
+            <option>全部分类</option>
+        </select>
+        <input type="search">
+        <a href="javascript:void();" class="btn btn-info">搜索</a>
+    </div>
+
+    <hr>
+    <!-- 博文 -->
+    <div class="panel panel-info">
+        <div class="panel-heading">标题</div>
+        <div class="panel-body">
+            内容
+        </div>
+    </div>
+
+    <!-- 翻页 -->
+    <hr>
+    <div class="blog-list-flip-div">
+        <div class="blog-list-flip-div-last">
+            <a href="">上一页</a>
+        </div>
+        <div class="blog-list-flip-div-select">
+            <select>
+                <option>第1页</option>
+            </select>
+        </div>
+        <div class="blog-list-flip-div-next">
+            <a href="">下一页</a>
+        </div>
+    </div>
+
+{% endblock %}

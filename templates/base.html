@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/base.css">
+        {% block "head" %}{% endblock %}
+    </head>
+    <body>
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                    <h3 align="center">yubang的个人博客</h3>
+            </div>
+        </nav>
+
+        {% block "content" %}{% endblock %}
+
+        <hr>
+        <footer>
+            <p align="center">
+                <small>
+                    该博客是基于python + django + mysql搭建
+                    <a href="https://github.com/yubang/blog" target="_blank">（源代码）</a>
+                </small>
+            </p>
+        </footer>
+
+        <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        {% block "script" %}{% endblock %}
+    </body>
+</html>
