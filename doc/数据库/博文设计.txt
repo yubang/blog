@@ -1,0 +1,10 @@
+create table if not exists blog_blog(
+
+    id int(11) auto_increment,
+    title varchar(100) not null comment '博客标题',
+    content text not null comment '博客正文',
+    status tinyint(1) not null comment '0为公开，1为私有，2为删除',
+    label varchar(100) not null comment '博文标签',
+    createTime datetime not null,
+    primary key(id)
+) default charset=utf8;

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>分类管理</title>
+    </head>
+    <body>
+
+        <form action="" method="post">
+            <input type="text" name="content" required>
+            <input type="submit" value="添加">
+        </form>
+        <hr>
+        {% for label in labels %}
+            <p>
+                {{label.content}}
+                {% if label.status == 0 %}
+                    <a href="/admin/label/{{label.id}}/1">禁用</a>
+                {% else %}
+                    <a href="/admin/label/{{label.id}}/0">启用</a>
+                {% endif %}
+                <a href="/admin/label/{{label.id}}/2">删除</a>
+            </p>
+        {% endfor %}
+
+    </body>
+</html>

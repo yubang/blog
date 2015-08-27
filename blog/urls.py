@@ -5,4 +5,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'blog.views.index'),
+    url(r'^admin/', include('admin.urls')),
 )

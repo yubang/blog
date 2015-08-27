@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>博文管理</title>
+    </head>
+    <body>
+
+        <form action="" method="post">
+
+            <input type="text" name="title" style="width:50%;" required>
+            <select name="label">
+                <option value="">默认分类</option>
+                {% for label in labels %}
+                    <option value="{{label.content}}">{{label.content}}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <textarea id="editor" name="content" style="height:500px;" required></textarea>
+            <br>
+            <input type="submit" value="发布">
+        </form>
+
+        <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.min.js"> </script>
+        <script>
+            var ue = UE.getEditor('editor');
+        </script>
+    </body>
+</html>
