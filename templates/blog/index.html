@@ -26,16 +26,26 @@
     <hr>
     <div class="blog-list-flip-div">
         <div class="blog-list-flip-div-last">
-            <a href="">上一页</a>
+            <a class="btn" href="/?page={{lastPage}}" {% if lastPage == 0 %}disabled="disabled"{% endif %}>上一页</a>
         </div>
         <div class="blog-list-flip-div-select">
-            <select>
-                <option>第1页</option>
+            <select onchange="selectPage(this)">
+                {% for page in totalPage %}
+                    <option  value="{{page}}" {% if page == nowPage %}selected{% endif %}>第{{page}}页</option>
+                {% endfor %}
             </select>
         </div>
         <div class="blog-list-flip-div-next">
-            <a href="">下一页</a>
+            <a class="btn" href="/?page={{nextPage}}" {% if nextPage == 0 %}disabled="disabled"{% endif %}>下一页</a>
         </div>
     </div>
 
+{% endblock %}
+
+{% block "script" %}
+    <script>
+        function selectPage(obj){
+            location.href="/?page=" + obj.value;
+        }
+    </script>
 {% endblock %}
