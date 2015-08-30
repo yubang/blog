@@ -4,15 +4,21 @@
 {% endblock %}
 
 {% block "content" %}
-    <div class="search-blog-div">
-        <select>
-            <option>全部分类</option>
+    <div id="searchDiv" class="search-blog-div" style="display:none;">
+        <select id="label">
+            <option value="">全部分类</option>
+            {% for label in labels %}
+                <option {% if type == label.content %}selected{% endif %} value="{{label.content}}">{{label.content}}</option>
+            {% endfor %}
         </select>
-        <input type="search">
-        <a href="javascript:void();" class="btn btn-info">搜索</a>
+        <input id="key" type="search" placeholder="搜索关键词" value="{% if key %}{{key}}{% endif %}">
+        <a href="javascript:searchBlog();" class="btn btn-info">搜索</a>
     </div>
-
+    <p align="center">
+        <a id="showOrHideButton" href="javascript:showOrHideSearchDiv();">展开搜索</a>
+    </p>
     <hr>
+
     <!-- 博文 -->
     {% for blog in blogs %}
     <div class="panel panel-info">
@@ -26,7 +32,7 @@
     <hr>
     <div class="blog-list-flip-div">
         <div class="blog-list-flip-div-last">
-            <a class="btn" href="/?page={{lastPage}}" {% if lastPage == 0 %}disabled="disabled"{% endif %}>上一页</a>
+            <a class="btn" href="/?page={{lastPage}}{{url}}" {% if lastPage == 0 %}disabled="disabled"{% endif %}>上一页</a>
         </div>
         <div class="blog-list-flip-div-select">
             <select onchange="selectPage(this)">
@@ -36,7 +42,7 @@
             </select>
         </div>
         <div class="blog-list-flip-div-next">
-            <a class="btn" href="/?page={{nextPage}}" {% if nextPage == 0 %}disabled="disabled"{% endif %}>下一页</a>
+            <a class="btn" href="/?page={{nextPage}}{{url}}" {% if nextPage == 0 %}disabled="disabled"{% endif %}>下一页</a>
         </div>
     </div>
 
@@ -46,6 +52,27 @@
     <script>
         function selectPage(obj){
             location.href="/?page=" + obj.value;
+        }
+        var hideSign = true;
+        function showOrHideSearchDiv(){
+            if(hideSign){
+                $("#searchDiv").show();
+                $("#showOrHideButton").html("收起搜索");
+            }else{
+                $("#searchDiv").hide();
+                $("#showOrHideButton").html("展开搜索");
+            }
+            hideSign = !hideSign;
+        }
+        function searchBlog(){
+            var type = $("#label").val();
+            var key = $("#key").val();
+
+            key = encodeURIComponent(key);
+            type = encodeURIComponent(type);
+
+            var url = "/search?key="+key+"&type="+type;
+            location.href=url;
         }
     </script>
 {% endblock %}
