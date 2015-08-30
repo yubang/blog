@@ -48,3 +48,10 @@ def label_update(request, label_id, label_status):
     """更改标签状态"""
     LabelModel.objects.filter(id=label_id).update(status=label_status)
     return HttpResponseRedirect("/admin/add/label")
+
+
+def delete_blog(request, blog_id):
+    """删除博文"""
+    BlogModel.objects.filter(id=blog_id).update(status=2)
+    referer = request.META['HTTP_REFERER']
+    return HttpResponseRedirect(referer)

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block "head" %}
+    <title>{{blog.title}}</title>
+{% endblock %}
+{% block "content" %}
+<h3 align="center" style="color:skyblue;">{{blog.title}}</h3>
+<hr>
+<div style="padding:10px;">
+    {{blog.content|safe}}
+</div>
+{% endblock %}

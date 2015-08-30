@@ -7,6 +7,8 @@
 
 
 from django.shortcuts import render_to_response
+from django.http import HttpResponseNotFound
+from django.core.exceptions import ObjectDoesNotExist
 from blog.models import BlogModel, LabelModel
 
 
@@ -56,3 +58,11 @@ def index(request):
 
     return render_to_response("blog/index.html", {'blogs': blogs, 'nextPage': next_page, 'lastPage': last_page, 'totalPage': range(1, total_page + 1), 'nowPage': page + 1, 'labels': labels, 'key': key, 'type': label, 'url': url})
 
+
+def blog(request, blog_id):
+    """显示博文"""
+    try:
+        blog = BlogModel.objects.get(id=blog_id, status=0)
+        return render_to_response("blog/blog.html", {'blog': blog})
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound("该博文不存在！")
