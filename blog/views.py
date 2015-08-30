@@ -31,7 +31,7 @@ def index(request):
     next_page = page + 2
     last_page = page
 
-    page_num = 10
+    page_num = 5
     # 判断有没有下一页，并且获取总页数
     if key == None and label == None:
         bllog_nums = BlogModel.objects.order_by("-createTime").filter(status=0).count()
@@ -58,7 +58,7 @@ def index(request):
     #拉取所有标签
     labels = LabelModel.objects.filter(status=0)
 
-    return render_to_response("blog/index.html", {'blogs': blogs, 'nextPage': next_page, 'lastPage': last_page, 'totalPage': range(1, total_page + 1), 'nowPage': page + 1, 'labels': labels, 'key': key, 'type': label, 'url': url})
+    return render_to_response("blog/index.html", {'blogs': blogs, 'nextPage': next_page, 'lastPage': last_page, 'totalPage': range(1, total_page + 1), 'nowPage': page + 1, 'labels': labels, 'key': key, 'type': label, 'url': url, 'isAdmin': 'admin' in request.session})
 
 
 def blog(request, blog_id):

@@ -25,13 +25,16 @@
         <div class="panel-heading">
             {{blog.title}}
         </div>
-        <div class="panel-body">
+        <div class="panel-body blog_list_content">
             {{blog.content|safe}}
         </div>
         <hr>
+
         <a href="/blog/{{blog.id}}" style="margin-left:10px;">查看博文</a>
+        {% if isAdmin %}
         <a href="/admin/add/blog/{{blog.id}}">修改博文</a>
         <a href="/admin/deleteBlog/{{blog.id}}">删除博文</a>
+        {% endif %}
     </div>
     {% endfor %}
     <!-- 翻页 -->

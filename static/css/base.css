@@ -33,3 +33,8 @@
 .blog-list-flip-div-select{
     width:60%;
 }
+
+.blog_list_content{
+    max-height: 100px;
+    overflow-y: hidden;
+}

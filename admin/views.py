@@ -4,8 +4,10 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
+from blog.settings import ADMIN_PASSWORD, ADMIN_USER
 from blog.models import BlogModel, LabelModel
 import datetime
+import time
 
 
 def index(request):
@@ -61,3 +63,17 @@ def delete_blog(request, blog_id):
     BlogModel.objects.filter(id=blog_id).update(status=2)
     referer = request.META['HTTP_REFERER']
     return HttpResponseRedirect(referer)
+
+
+def account(request):
+    """后台管理员登录"""
+    if request.method == "GET":
+        return render_to_response("admin/account.html")
+    else:
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        if ADMIN_USER == username and ADMIN_PASSWORD == password:
+            request.session['admin'] = time.time()
+            return HttpResponseRedirect("/admin")
+        else:
+            return HttpResponseRedirect("/admin/account")

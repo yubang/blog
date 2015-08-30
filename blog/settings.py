@@ -47,6 +47,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'blog.middle.AdminCheck'
 )
 
 ROOT_URLCONF = 'blog.urls'
@@ -117,3 +118,8 @@ if DEBUG:
             },
         }
     }
+
+
+# 后台用户
+ADMIN_USER = 'root'
+ADMIN_PASSWORD = 'root'
