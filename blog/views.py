@@ -9,9 +9,11 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseNotFound
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.decorators.gzip import gzip_page
 from blog.models import BlogModel, LabelModel
 
 
+@gzip_page
 def index(request):
     """主页面"""
 

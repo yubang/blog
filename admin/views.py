@@ -25,9 +25,15 @@ def add_blog(request, blog_id):
         title = request.POST.get('title', None)
         content = request.POST.get('content', None)
         label = request.POST.get('label', None)
-        obj = BlogModel(title=title, content=content, label=label, status=0, createTime=datetime.datetime.now())
-        obj.save()
+
+        if blog_id == "0":
+            obj = BlogModel(title=title, content=content, label=label, status=0, createTime=datetime.datetime.now())
+            obj.save()
+        else:
+            BlogModel.objects.filter(id=blog_id).update(title=title, content=content, label=label)
+
         return HttpResponseRedirect("/")
+
 
 def add_label(request):
     """添加分类"""

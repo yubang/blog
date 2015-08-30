@@ -8,7 +8,7 @@
 
         <form action="" method="post">
 
-            <input type="text" name="title" style="width:50%;" required>
+            <input type="text" name="title" value="{{obj.title}}" style="width:50%;" required>
             <select name="label">
                 <option value="">默认分类</option>
                 {% for label in labels %}
@@ -16,15 +16,17 @@
                 {% endfor %}
             </select>
             <br><br>
-            <textarea id="editor" name="content" style="height:500px;" required></textarea>
+            <textarea id="editor" name="content" style="height:500px;" required>{{obj.content}}</textarea>
             <br>
             <input type="submit" value="发布">
         </form>
 
+        <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
         <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.min.js"> </script>
         <script>
             var ue = UE.getEditor('editor');
+            $("select[name='label']").val("{{obj.label}}");
         </script>
     </body>
 </html>
