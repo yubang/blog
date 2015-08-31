@@ -123,3 +123,9 @@ if DEBUG:
 # 后台用户
 ADMIN_USER = 'root'
 ADMIN_PASSWORD = 'root'
+
+# 七牛存储信息
+QINIU_HOST = ""
+QINIU_KEY = ""
+QINIU_TOKEN = ""
+QINIU_BUCKET = ""
