@@ -96,7 +96,16 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+CACHES = {
+    'default': {
+        'BACKEND': 'windPlug.cache.sys.RedisCache',
+        'host': 'localhost',
+        'port': 6379,
+        'db': 0,
+    }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_COOKIE_AGE = 3600 * 24 * 30
 
 #调试模式输出sql语句
