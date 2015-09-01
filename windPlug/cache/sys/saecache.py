@@ -26,15 +26,12 @@ class SaeKVCache(BaseCache):
             version = 'default'
         else:
             version = str(version)
-        return '_'.join((self.key_prefix, version, key))
+        return str('_'.join((self.key_prefix, version, key)))
 
     def has_key(self, key, version=None):
         return self.__cache.get(self.make_key(key, version)) is not None
 
     def set(self, key, value, timeout=None, version=None):
-        if timeout is None:
-            timeout = self.timeout
-        self.__cache.expire(self.make_key(key, version), timeout)
         return self.__cache.set(self.make_key(key, version), value)
 
     def get(self, key, default=None, version=None):
