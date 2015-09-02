@@ -11,12 +11,13 @@ from django.http import HttpResponseNotFound
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.gzip import gzip_page
 from blog.models import BlogModel, LabelModel
+from windPlug.cache.page.pageCache import page_cache
 
 
 @gzip_page
+@page_cache(path_sign=True)
 def index(request):
     """主页面"""
-
     label = request.GET.get('type', None)
     key = request.GET.get('key', None)
 

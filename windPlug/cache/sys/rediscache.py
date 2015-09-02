@@ -9,6 +9,7 @@
 
 from django.core.cache.backends.base import BaseCache
 import redis
+import json
 
 
 class RedisCache(BaseCache):
@@ -32,16 +33,26 @@ class RedisCache(BaseCache):
         return '_'.join((self.key_prefix, version, key))
 
     def has_key(self, key, version=None):
-        return self.__cache.get(self.make_key(key, version)) is not None
+        return self.__cache.get(key) is not None
 
     def set(self, key, value, timeout=None, version=None):
         if timeout is None:
             timeout = self.timeout
         self.__cache.expire(self.make_key(key, version), timeout)
-        return self.__cache.set(self.make_key(key, version), value)
+
+        v = dict()
+        v['type'] = type(value).__name__
+        v['data'] = value
+        return self.__cache.set(self.make_key(key, version), json.dumps(v))
 
     def get(self, key, default=None, version=None):
-        return self.__cache.get(self.make_key(key, version))
+        d = self.__cache.get(self.make_key(key, version))
+
+        if d is None:
+            return None
+
+        data = json.loads(d)
+        return data['data']
 
     def add(self, key, value, timeout=None, version=None):
         if self.has_key(key):
