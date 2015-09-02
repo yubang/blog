@@ -14,3 +14,9 @@ DB_ROUTE_SELECT_OPTION = 0
 
 # 页面缓存key前缀
 PAGE_CACHE_PREFIX = "pageCache"
+
+
+# 自定义headers
+OWN_HEADERS = {
+    'windPlugVersion': '1.0.0(bate)',
+}
