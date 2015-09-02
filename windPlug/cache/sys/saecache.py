@@ -8,6 +8,8 @@
 
 
 from django.core.cache.backends.base import BaseCache
+import json
+import time
 import sae.kvdb
 
 
@@ -32,13 +34,33 @@ class SaeKVCache(BaseCache):
         return self.__cache.get(self.make_key(key, version)) is not None
 
     def set(self, key, value, timeout=None, version=None):
-        return self.__cache.set(self.make_key(key, version), value)
+        if timeout is None:
+            timeout = 3600
+        v = dict()
+        v['type'] = type(value).__name__
+        v['data'] = value
+        v['time'] = time.time() + timeout
+        v = json.dumps(v)
+        return self.__cache.set(self.make_key(key, version), v)
 
     def get(self, key, default=None, version=None):
-        return self.__cache.get(self.make_key(key, version))
+        d = self.__cache.get(self.make_key(key, version))
+
+        if d is None:
+            return None
+
+        data = json.loads(d)
+        return data['data']
 
     def add(self, key, value, timeout=None, version=None):
-        return self.__cache.add(self.make_key(key, version), value, timeout=None, version=None)
+        if timeout is None:
+            timeout = 3600
+        v = dict()
+        v['type'] = type(value).__name__
+        v['data'] = value
+        v['time'] = time.time() + timeout
+        v = json.dumps(v)
+        return self.__cache.add(self.make_key(key, version), v, timeout=None, version=None)
 
     def delete(self, key, version=None):
         return self.__cache.delete(self.make_key(key, version))

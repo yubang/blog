@@ -4,6 +4,7 @@
 from qiniu import Auth, put_data
 from blog import settings
 from django.http import HttpResponse, HttpResponseRedirect
+from windPlug.cache.page.pageCache import page_cache
 import re
 import json
 import hashlib
@@ -36,6 +37,7 @@ def ueditor(request):
         return upload_image(request)
 
 
+@page_cache(path_sign=True, cache_timeout=3600*24, allow_redirect=True)
 def show_pic(request, pic_name):
     url = get_download_file_url(pic_name)
     return HttpResponseRedirect(url)
@@ -52,5 +54,5 @@ def get_download_file_url(file_name):
     """获取文件url"""
     q = Auth(settings.QINIU_KEY, settings.QINIU_TOKEN)
     base_url = 'http://%s/%s' % (settings.QINIU_HOST, file_name)
-    private_url = q.private_download_url(base_url, expires=3600)
+    private_url = q.private_download_url(base_url, expires=3600*24)
     return private_url

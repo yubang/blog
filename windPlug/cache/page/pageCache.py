@@ -20,12 +20,17 @@ def save_data(cache_key, response, cache_timeout):
     data = response.content
     meta = dict()
     meta['Content-Type'] = response['Content-Type']
+    meta['status'] = response.status_code
+
+    if 'Location' in response:
+        meta['Location'] = response['Location']
+
     cache.set(cache_key, json.dumps({'meta': meta, 'data': data}), cache_timeout)
 
 
 def get_data(cache_key):
     """获取数据"""
-    #尝试从缓存提取内容
+    # 尝试从缓存提取内容
     data = cache.get(cache_key)
     if data:
         d = json.loads(data)
@@ -33,12 +38,14 @@ def get_data(cache_key):
         response = HttpResponse(d['data'])
         response['windPlugCacheHit'] = "on"
         response['windPlugCacheType'] = "page_cache"
+        response.status_code = metas['status']
+        del metas['status']
         for key in metas:
             response[key] = metas[key]
         return response
 
 
-def page_cache(session_sign=False, session_key=None, path_sign=False, cookie_sign=False, cookie_key=None, cache_timeout = 3600):
+def page_cache(session_sign=False, session_key=None, path_sign=False, cookie_sign=False, cookie_key=None, cache_timeout=300, allow_redirect = False):
     """
     页面缓存
     cache key构成： session(md5)_cookie(md5)_url(md5)的md5 + 前缀
@@ -65,7 +72,7 @@ def page_cache(session_sign=False, session_key=None, path_sign=False, cookie_sig
             if cookie_sign:
                 cache_key = cache_key + "cookie_" + hashlib.md5(json.dumps(cookie_key)).hexdigest() + "_"
             if path_sign:
-                cache_key = cache_key + "path_" + hashlib.md5(args[0].path).hexdigest()
+                cache_key = cache_key + "path_" + hashlib.md5(args[0].get_full_path()).hexdigest()
             cache_key = windPlugConfig.PAGE_CACHE_PREFIX + '_' + cache_key
 
             #获取缓存
@@ -79,7 +86,13 @@ def page_cache(session_sign=False, session_key=None, path_sign=False, cookie_sig
             response['windPlugCacheType'] = "page_cache"
 
             #保存数据
-            save_data(cache_key, response, cache_timeout)
+            save_sign = False
+            if response.status_code == 200:
+                save_sign = True
+            elif response.status_code == 302 and allow_redirect:
+                save_sign = True
+            if save_sign:
+                save_data(cache_key, response, cache_timeout)
 
             return response
         return deal
