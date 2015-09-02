@@ -21,7 +21,7 @@ def index(request):
     label = request.GET.get('type', None)
     key = request.GET.get('key', None)
 
-    if key != None and label != None:
+    if key is not None and label is not None:
         url = "&type=%s&key=%s" % ((label, key))
     else:
         url = ""
@@ -62,6 +62,7 @@ def index(request):
     return render_to_response("blog/index.html", {'blogs': blogs, 'nextPage': next_page, 'lastPage': last_page, 'totalPage': range(1, total_page + 1), 'nowPage': page + 1, 'labels': labels, 'key': key, 'type': label, 'url': url, 'isAdmin': 'admin' in request.session})
 
 
+@page_cache(path_sign=True)
 def blog(request, blog_id):
     """显示博文"""
     try:

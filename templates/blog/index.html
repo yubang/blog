@@ -28,8 +28,7 @@
         <div class="panel-body blog_list_content">
             {{blog.content|safe}}
         </div>
-        <hr>
-
+        <div style="border:1px solid #eee;width:100%;margin-bottom:3px;"></div>
         <a href="/blog/{{blog.id}}" style="margin-left:10px;">查看博文</a>
         {% if isAdmin %}
         <a href="/admin/add/blog/{{blog.id}}">修改博文</a>
@@ -40,8 +39,8 @@
     <!-- 翻页 -->
     <hr>
     <div class="blog-list-flip-div">
-        <div class="blog-list-flip-div-last">
-            <a class="btn" href="/?page={{lastPage}}{{url}}" {% if lastPage == 0 %}disabled="disabled"{% endif %}>上一页</a>
+        <div class="blog-list-flip-div-last">&nbsp;
+            <a class="btn" href="/?page={{lastPage}}{{url}}" {% if lastPage == 0 %}style="display:none;"{% endif %}>上一页</a>
         </div>
         <div class="blog-list-flip-div-select">
             <select onchange="selectPage(this)">
@@ -51,7 +50,7 @@
             </select>
         </div>
         <div class="blog-list-flip-div-next">
-            <a class="btn" href="/?page={{nextPage}}{{url}}" {% if nextPage == 0 %}disabled="disabled"{% endif %}>下一页</a>
+            <a class="btn" href="/?page={{nextPage}}{{url}}" {% if nextPage == 0 %}style="display:none;"{% endif %}>下一页</a>
         </div>
     </div>
 

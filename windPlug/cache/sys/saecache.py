@@ -51,6 +51,10 @@ class SaeKVCache(BaseCache):
             return None
 
         data = json.loads(d)
+
+        if time.time() > data.get('time', 0):
+            return None
+
         return data['data']
 
     def add(self, key, value, timeout=None, version=None):
