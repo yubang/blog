@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block "head" %}
+    <title>关于</title>
+{% endblock %}
+{% block "content" %}
+<ul class="list-group">
+  <li class="list-group-item list-group-item-success">
+      博客程序开发者：yubang
+      邮箱：yubang@aliyun.com
+  </li>
+  <li class="list-group-item list-group-item-info">
+    该博客基于django1.6.11开发（兼容python2.6,python2.7）
+  </li>
+  <li class="list-group-item list-group-item-warning">
+    博客使用的第三方服务有七牛云储存，多说评论
+  </li>
+  <li class="list-group-item list-group-item-danger">
+    博客开放源码，代码在
+      &nbsp;&nbsp;&nbsp;
+      <a href="https://github.com/yubang/blog">https://github.com/yubang/blog</a>
+  </li>
+</ul>
+{% endblock %}

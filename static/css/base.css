@@ -38,3 +38,16 @@
     max-height: 100px;
     overflow-y: hidden;
 }
+
+
+.main-tab-div{
+    width:100%;
+    text-align:center;
+}
+
+.main-tab-div a{
+    width:33%;
+    height:30px;
+    display:block;
+    float:left;
+}

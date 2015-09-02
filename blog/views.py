@@ -68,3 +68,15 @@ def blog(request, blog_id):
         return render_to_response("blog/blog.html", {'blog': blog})
     except ObjectDoesNotExist:
         return HttpResponseNotFound("该博文不存在！")
+
+
+def about(request):
+    return render_to_response("blog/about.html")
+
+
+def sitemap(request):
+    url = "http://" + request.get_host() + "/blog/"
+    blogs = BlogModel.objects.filter(status=0)
+    response = render_to_response("blog/sitemap.html", {'blogs': blogs, 'url': url})
+    response['Content-Type'] = 'text/plain'
+    return response
