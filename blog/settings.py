@@ -57,9 +57,26 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+DATABASE_ROUTERS = ['windPlug.route.db.MasterAndSlaveRoute',]
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'blog',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    },
+    'master': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'blog',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    },
+    'slave': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
         'USER': 'root',
@@ -98,7 +115,7 @@ STATICFILES_DIRS = (
 
 CACHES = {
     'default': {
-        'BACKEND': 'windPlug.cache.sys.RedisCache',
+        'BACKEND': 'windPlug.cache.sys.rediscache.RedisCache',
         'host': 'localhost',
         'port': 6379,
         'db': 0,

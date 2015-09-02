@@ -1,0 +1,1 @@
+windPlugConfig.py 是windPlug必须的配置文件，所以请放在项目的根目录下
