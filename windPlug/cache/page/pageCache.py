@@ -33,7 +33,10 @@ def get_data(cache_key):
     # 尝试从缓存提取内容
     data = cache.get(cache_key)
     if data:
-        d = json.loads(data)
+        try:
+            d = json.loads(data)
+        except:
+            return None
         metas = d['meta']
         response = HttpResponse(d['data'])
         response['windPlugCacheHit'] = "on"

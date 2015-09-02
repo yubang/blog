@@ -44,6 +44,7 @@ class SaeKVCache(BaseCache):
         return self.__cache.set(self.make_key(key, version), v)
 
     def get(self, key, default=None, version=None):
+
         d = self.__cache.get(self.make_key(key, version))
 
         if d is None:
