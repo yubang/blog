@@ -3,6 +3,7 @@
 
 """
 处理访问的浏览器类型
+@author: yubang
 """
 
 
@@ -56,8 +57,34 @@ def get_browser_type(request=None, user_agent=None):
     if request:
         user_agent = request.META.get('HTTP_USER_AGENT', None)
     browser_data = get_browser_data()
-    print user_agent
     for data in browser_data:
         if re.search(data['key'], user_agent):
             return data['name']
     return "未知浏览器"
+
+
+def get_browser_os(request=None, user_agent=None):
+    """
+    获取客户操作系统
+    :param request: django的Request对象
+    :param user_agent: 浏览器user-agent
+    :return: str
+    """
+    if request:
+        user_agent = request.META.get('HTTP_USER_AGENT', None)
+    os_data = [
+        {'name': 'Windows 10', 'key': 'Windows NT 6.4'},
+        {'name': 'Windows 8.1', 'key': 'Windows NT 6.4'},
+        {'name': 'Windows 8', 'key': 'Windows NT 6.4'},
+        {'name': 'Windows vista', 'key': 'Windows NT 6.4'},
+        {'name': 'Windows 7', 'key': 'Windows NT 6.4'},
+        {'name': 'Windows xp', 'key': 'Windows NT 6.4'},
+        {'name': 'Android', 'key': 'Android'},
+        {'name': 'Linux', 'key': 'Linux'},
+        {'name': 'iphone', 'key': 'iphone'},
+        {'name': 'ipod', 'key': 'ipod'},
+    ]
+    for data in os_data:
+        if re.search(data['key'], user_agent):
+            return data['name']
+    return "未知操作系统"

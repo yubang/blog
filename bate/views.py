@@ -2,7 +2,7 @@
 
 
 from django.http import HttpResponse
-from windPlug.core.browser import is_pc_browser, get_browser_type
+from windPlug.core.browser import is_pc_browser, get_browser_type, get_browser_os
 
 
 def browser(request):
@@ -11,5 +11,5 @@ def browser(request):
         m = "是电脑浏览器"
     else:
         m = "不是电脑浏览器"
-    m = m + "\n" + get_browser_type(request)
+    m = m + "\n" + get_browser_type(request) + "\n" + get_browser_os(request)
     return HttpResponse(m)
