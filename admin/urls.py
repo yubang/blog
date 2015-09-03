@@ -11,4 +11,5 @@ urlpatterns = patterns('admin.views',
     url(r'^label/(?P<label_id>\d+)/(?P<label_status>\d+)$', 'label_update'),
     url(r'^deleteBlog/(?P<blog_id>\d+)$', 'delete_blog'),
     url(r'^account$', 'account'),
+    url(r'^migration/(?P<option>[a-zA-Z]+)$', 'migration'),
 )

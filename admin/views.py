@@ -2,10 +2,11 @@
 
 
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 from blog.settings import ADMIN_PASSWORD, ADMIN_USER
 from blog.models import BlogModel, LabelModel
+from windPlug.script.migration import create_sql, migration_db
 import datetime
 import time
 
@@ -77,3 +78,21 @@ def account(request):
             return HttpResponseRedirect("/admin")
         else:
             return HttpResponseRedirect("/admin/account")
+
+
+def migration(request, option):
+    """
+    同步数据库
+    :param request: django的request对象
+    :param option: 操作类型
+    :return: HttpResponse
+    """
+
+    if option == "create":
+        m = "创建的sql在：" + create_sql("data/sql")
+    elif option == "migration":
+        count = migration_db("data/sql")
+        m = "执行的sql数：" + str(count)
+    else:
+        m = "fail"
+    return HttpResponse(m)
