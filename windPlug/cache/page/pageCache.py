@@ -48,13 +48,16 @@ def get_data(cache_key):
         return response
 
 
-def page_cache(session_sign=False, session_key=None, path_sign=False, cookie_sign=False, cookie_key=None, cache_timeout=300, allow_redirect = False):
+def page_cache(session_sign=False, session_key=None, path_sign=False, cookie_sign=False, cookie_key=None,
+               cache_timeout=300, allow_redirect=False, not_use_cache_session=None):
     """
     页面缓存
     cache key构成： session(md5)_cookie(md5)_url(md5)的md5 + 前缀
-    @:param session_sign是否通过session来区分是否使用缓存
-    @:param path_sign 是否通过路径来判断是否有缓存
-    @:param cache_timeout 缓存时间
+    :param session_sign: 是否通过session来区分是否使用缓存
+    :param path_sign: 是否通过路径来判断是否有缓存
+    :param cache_timeout: 缓存时间
+    :param not_use_cache_session: 不使用缓存的session key
+    :return function
     """
     def handle(func):
         @wraps(func)
@@ -78,6 +81,12 @@ def page_cache(session_sign=False, session_key=None, path_sign=False, cookie_sig
                 cache_key = cache_key + "path_" + hashlib.md5(args[0].get_full_path()).hexdigest()
             cache_key = windPlugConfig.PAGE_CACHE_PREFIX + '_' + cache_key
 
+            if not_use_cache_session:
+                for key in not_use_cache_session:
+                    if key in args[0].session:
+                        use_cache_sign = False
+                        break
+
             #获取缓存
             if use_cache_sign:
                 response = get_data(cache_key)
@@ -94,7 +103,7 @@ def page_cache(session_sign=False, session_key=None, path_sign=False, cookie_sig
                 save_sign = True
             elif response.status_code == 302 and allow_redirect:
                 save_sign = True
-            if save_sign:
+            if save_sign and use_cache_sign:
                 save_data(cache_key, response, cache_timeout)
 
             return response

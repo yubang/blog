@@ -15,7 +15,7 @@ from windPlug.cache.page.pageCache import page_cache
 
 
 @gzip_page
-@page_cache(path_sign=True)
+@page_cache(path_sign=True, not_use_cache_session=['admin', ])
 def index(request):
     """主页面"""
     label = request.GET.get('type', None)
