@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     url(r'^search$', 'blog.views.index'),
     url(r'^blog/(?P<blog_id>\d+)$', 'blog.views.blog'),
     url(r'^admin/', include('admin.urls')),
+    url(r'^bate/', include('bate.urls')),
 
     url(r'^about$', 'blog.views.about'),
     url(r'^sitemap.txt$', 'blog.views.sitemap'),
